@@ -1,4 +1,10 @@
-import { EMAIL_CHANGED, PASSWORD_CHANGED, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL } from './types';
+import {
+  EMAIL_CHANGED,
+  PASSWORD_CHANGED,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAIL,
+  LOGIN_USER,
+} from './types';
 import firebase from 'firebase';
 
 
@@ -9,7 +15,8 @@ const loginUserSuccess = (dispatch, user) => {
   });
 }
 
-const loginUserFail = (dispatch) => {
+const loginUserFail = (dispatch, error) => {
+  console.log(error);
   dispatch({
     type: LOGIN_USER_FAIL,
   });
@@ -31,12 +38,13 @@ export const passwordChanged = (pwd) => {
 
 export const loginUser = (email, pwd) => {
   return (dispatch) => {
+    dispatch({ type: LOGIN_USER }); // this is to show the loader
     firebase.auth().signInWithEmailAndPassword(email, pwd)
       .then(user => loginUserSuccess(dispatch, user))
       .catch(() => {
         firebase.auth().createUserWithEmailAndPassword(email, pwd)
           .then(user => loginUserSuccess(dispatch, user))
-          .catch(() => loginUserFail(dispatch));
+          .catch((error) => loginUserFail(dispatch, error));
       });
   };
 }
