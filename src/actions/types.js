@@ -11,3 +11,5 @@ export const LOGIN_USER = 'login_user';
 
 // player update
 export const PLAYER_UPDATE = 'player_update';
+
+export const PLAYER_CREATE = 'player_create';

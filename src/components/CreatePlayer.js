@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Picker } from 'react-native';
 
-import { updatePlayer } from '../actions';
+import { updatePlayer, createPlayer } from '../actions';
 import { Card, CardSection, Input, ButtonComponent } from './common';
 
 class CreatePlayer extends Component {
@@ -10,6 +10,12 @@ class CreatePlayer extends Component {
 
   updatePlayerField = ({ prop, value }) => {
     this.props.updatePlayer({ prop, value });
+  }
+
+  createPlayer = () => {
+    const { name, phone, skill } = this.props;
+
+    this.props.createPlayer({ name, phone, skill: skill || 'Batsman' });
   }
 
   render() {
@@ -48,6 +54,7 @@ class CreatePlayer extends Component {
         <CardSection>
           <ButtonComponent
             text="Save"
+            onPress={this.createPlayer}
           />
         </CardSection>
       </Card>
@@ -61,4 +68,4 @@ const mapStateToProps = (state) => {
   return { name, phone, skill };
 }
 
-export default connect(mapStateToProps, { updatePlayer })(CreatePlayer);
+export default connect(mapStateToProps, { updatePlayer, createPlayer })(CreatePlayer);
