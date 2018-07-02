@@ -38,10 +38,21 @@ export const fetchPlayers = () => {
 
 export const updatePlayerDetails = ({ name, phone, skill, uid }) => {
   const { currentUser } = firebase.auth();
-  console.log(name, phone, skill, uid);
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/players/${uid}`)
       .set({ name, phone, skill })
+      .then(() => {
+        dispatch({ type: PLAYER_UPDATE_SUCCESS });
+        Actions.playersList({ type: 'reset' });
+      });
+  }
+}
+
+export const deletePlayer = ({ uid }) => {
+  const { currentUser } = firebase.auth();
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/players/${uid}`)
+      .remove()
       .then(() => {
         dispatch({ type: PLAYER_UPDATE_SUCCESS });
         Actions.playersList({ type: 'reset' });
