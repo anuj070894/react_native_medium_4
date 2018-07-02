@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { CardSection } from './common';
 
 class ListItem extends Component {
+
+  onPlayerClick = () => {
+    Actions.editPlayer({ player: this.props.player });
+  }
+
   render() {
     const { player } = this.props;
     const { listItemTextStyles } = styles;
     return (
-      <CardSection>
-        <Text style={ listItemTextStyles }>
-          { player.name }
-        </Text>
-      </CardSection>
+      <TouchableWithoutFeedback onPress={this.onPlayerClick}>
+        <View>
+          <CardSection>
+            <Text style={ listItemTextStyles }>
+              { player.name }
+            </Text>
+          </CardSection>
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 }

@@ -5,6 +5,6 @@ import PlayersListReducer from './PlayersListReducer';
 
 export default combineReducers({
   auth: AuthReducer,
-	playerUpdate: PlayerReducer,
-	playersList: PlayersListReducer
+  playerUpdate: PlayerReducer,
+  playersList: PlayersListReducer,
 });

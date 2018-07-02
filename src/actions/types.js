@@ -15,3 +15,5 @@ export const PLAYER_UPDATE = 'player_update';
 export const PLAYER_CREATE = 'player_create';
 
 export const PLAYERS_FETCH_SUCCESS = 'players_fetch_success';
+
+export const PLAYER_UPDATE_SUCCESS = 'player_update_success';

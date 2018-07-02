@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 
-import { PLAYER_UPDATE, PLAYER_CREATE, PLAYERS_FETCH_SUCCESS } from './types';
+import { PLAYER_UPDATE, PLAYER_CREATE, PLAYERS_FETCH_SUCCESS, PLAYER_UPDATE_SUCCESS } from './types';
 
 export const updatePlayer = ({ prop, value }) => {
   return {
@@ -32,6 +32,19 @@ export const fetchPlayers = () => {
       .on('value', (snapshot) => {
         dispatch({ type: PLAYERS_FETCH_SUCCESS, payload: snapshot.val() }); // this function is persistent throughout the app. meaning whenever there is data
         // get that value from the firebase. that value is from the snapsot.
+      });
+  }
+}
+
+export const updatePlayerDetails = ({ name, phone, skill, uid }) => {
+  const { currentUser } = firebase.auth();
+  console.log(name, phone, skill, uid);
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/players/${uid}`)
+      .set({ name, phone, skill })
+      .then(() => {
+        dispatch({ type: PLAYER_UPDATE_SUCCESS });
+        Actions.playersList({ type: 'reset' });
       });
   }
 }
